@@ -8,16 +8,19 @@
 
 productCount = input('Enter amount of products you are purchasing ')
 productCount = int(productCount)
+subtotal = productCount*99
 
 if(productCount >= 10 and productCount<= 19):
-    total = 99-(99*.1)
-    print(f'Your total is {total}. You saved {99*.1}')
+    total = subtotal-(subtotal*.1)
+    print(f'Your total is {total}. You saved {subtotal*.1}')
 elif(productCount >= 20 and productCount <= 49):
-    total = 99-(99*.2)
-    print(f'Your total is {total}. You saved {99*.2}')
-elif(productCount >= 50 and productCount <= 99):
-    total = 99-(99*.3)
-    print(f'Your total is {total}. You saved {99*.3}')
+    total = subtotal-(subtotal*.2)
+    print(f'Your total is {total}. You saved {subtotal*.2}')
+elif(productCount >= 50 and productCount <= subtotal):
+    total = subtotal-(subtotal*.3)
+    print(f'Your total is {total}. You saved {subtotal*.3}')
 elif(productCount >= 100):
-    total = 99-(99*.4)
-    print(f'Your total is {total}. You saved {99*.4}')
+    total = subtotal-(subtotal*.4)
+    print(f'Your total is {total}. You saved {subtotal*.4}')
+else:
+    print(f'Your total is {subtotal}')
