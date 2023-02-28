@@ -47,7 +47,7 @@ def reportAgeRange(hEq):
         print("It looks like your dog is a puppy!")
     elif (hEq >= 18 and hEq < 21):
         print("It looks like your dog is an adolescent.")
-    elif (hEq >= 21 and hEq < 65 ):
+    elif (hEq >= 21 and hEq <= 65 ):
         print("It looks like your dog is middle-aged.")
     else:
         print("It looks like your dog is old.")
