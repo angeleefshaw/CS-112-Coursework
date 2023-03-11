@@ -1,0 +1,10 @@
+The goal is to write a two player guessing game. Guess a multiple of 7 number.
+Determine this number. It should be between 1 and 100. The game ends when the number
+is guessed or the player runs out of turns.
+
+## Important Dates
+1. Pseudo code of your process and outlines the order of the major teasks. A flow chart would also suffice
+2. Deadline - post code (one program only) .py file and one pdf doc explaining changes you made to the basic plan between 
+the first and final deadline.
+3. Filenaming - please anem your .py file with your name and the grade range you believe your 
+code should achieve. (E.g. angeleeAcode.py)
