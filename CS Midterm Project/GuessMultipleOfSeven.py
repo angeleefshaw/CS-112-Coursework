@@ -1,64 +1,126 @@
 import random
 
-# Program that allows two players to guess a number from 1-100 that is a multiple of seven.
-# EXTRA - Allow 3 games to be played in total
+# Program that hosts 3 rounds of a number guessing game. Players must guess a number between 1 and 100. 
+# The number must be a multiple of x. This multiple changes each round.
+# Gives the stats of the best guesser after all three rounds are complete
 
-# Inlcude a main function gives game instructions to users
-    # Collect names of 2 players
-    # Altername players and call by name when it is their turn
-    # Each player gets 3 guesses until the number has been guessed and a winner is declared
 def main():
+    numOfGames = 3
+    player1Wins = 0
+    player2Wins = 0
+
+    print('Welcome to the guessing game! We will play three rounds to see which player is the best guesser')
+    print('Players must guess a number between 1 and 100.')
+    print('This number must be a multiple of a random number.')
+    print('The multiple will change each game. Read the game instructions before playing! \n')
+    print('')
+
+    player1Name = input('Enter the name of the first player \n')
+    player2Name = input('Enter the name of the second player \n')
+    print('')
+
+    for i in range(numOfGames):
+        winner = playGame(player1Name, player2Name, i)
+
+        if (winner == player1Name):
+            player1Wins = player1Wins + 1
+        elif (winner == player2Name):
+            player2Wins = player2Wins + 1
+
+    getPlayerStats(player1Wins, player2Wins, player1Name, player2Name)
+
+    return
+
+
+def playGame(player1Name, player2Name, round):
     multiple = getMultiple()
     correctNum = getCorrectNum(multiple)
     totalTurns = 6
+    guessedNumers = []
 
     instructions(multiple)
 
-    player1 = input('Enter the name of the first player \n')
-    player2 = input('Enter the name of the second player \n')
+    currentPlayer = 0
+
+    for i in range(totalTurns):
+        if(len(guessedNumers)):
+            print(f'So far the number(s) {guessedNumers} have been guessed')
+            print('')
+
+        userGuess = int(input(f'{player2Name if currentPlayer else player1Name}, guess a number \n'))
+        print('')
+
+        if(userGuess == correctNum):
+            announceVictor(player2Name if currentPlayer else player1Name, correctNum, round)
+            return (player2Name if currentPlayer else player1Name)
+        else:
+            print('Incorrect!')
+            isGuessValid(userGuess, multiple, correctNum)
+            guessedNumers.append(userGuess)
 
 
-# Prints game instructions to the console
-# EXTRA - Adapt instructions to inform user of the new multiple for each new game
+        currentPlayer = generator(currentPlayer)
+
+    print(f'No one guessed correctly. The secret number was {correctNum}!\n')
+
+    return ''
+
+
 def instructions(multiple):
-    print(f'Welcome to the guessing game! Two players will have three turns each to guess a number between 1 and 100. This number must be a mulitple of {multiple}')
+    print(f'Each player will have three chances to guess a number between 1 and 100.')
+    print(f'For this round, the number must be a mulitple of {multiple}\n')
 
-# Get the games multiple
+
 def getMultiple():
-    # Returns a random multiple (not 1 because thats not helpful)
     return random.randint(2,9)
 
-# Function to select random number that is multiple of 7 and between 1-100
-# EXTRA - for each new game, allow the multiple to change (5,8,9 ect.)
+
 def getCorrectNum(multiple):
     factor = 100/multiple
     divider = random.randint(1, int(factor))
 
-    # Returns a number
     return (multiple*divider)
 
 
-# Is users input a multiple of multiple?
-def isGuessValid(num, multiple):
-    print('Checks user input for multiple of 7 validity')
-    # returns either true or false
+def generator(num):
+    if (num):
+        return 0
+    else:
+        return 1
 
 
-# Check to see if user input is too high or too low
+def isGuessValid(num, multiple, correctNum):
+    if(num%multiple != 0):
+        print(f'{num} is not a multiple of {multiple}')
+    
+    getGuessRange(num, correctNum)
+
+
 def getGuessRange(num, correctNum): 
     if(num < correctNum):
-        print('Guess is too low')
+        print('Your guess is too low \n')
     elif (num > correctNum):
-        print('Guess is too high')
+        print('Your guess is too high \n')
 
 
-# Final function to announce winner or losers
-def announceVictor(userName):
-    print('Congratulate the winner by name or that they are losers')
+def announceVictor(userName,correctNum, round):
+    print(f'Congratulations {userName}! The secret number was {correctNum}!')
+
+    if(round <= 1):
+        input('Press enter to start the next game...')
+    else:
+        input('This concludes the final round. \n')
 
 
-# EXTRA - get player stats and congratulate the player who wins the most games
-def getPlayerStats():
-    print('Congratulations Player1, you have won x games in total!')
+def getPlayerStats(player1Wins, player2Wins, player1Name, player2Name):
+    if player1Wins > player2Wins:
+        print(f'Congratulations {player1Name} you have won {player1Wins} games in total! You are the best guesser!')
+    elif player2Wins > player1Wins:
+        print(f'Congratulations {player2Name} you have won {player2Wins} games in total! You are the best guesser!')
+    elif (player1Wins == player2Wins and player1Wins > 0):
+        print(f'You have both tied with {player1Wins} wins. It looks like you are both great guessers.')
+    else:
+        return
+    
 
 main()
