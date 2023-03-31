@@ -30,4 +30,3 @@ print(wordlist)
 word = 'Lumberjack'
 print(list(word))
 
-word[0] = 
